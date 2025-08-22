@@ -1,62 +1,125 @@
-let highestZ = 1;
+@import url('https://fonts.googleapis.com/css2?family=Zeyada&display=swap');
 
-class Paper {
-  holdingPaper = false;
-  touchStartX = 0;
-  touchStartY = 0;
-  touchMoveX = 0;
-  touchMoveY = 0;
-  prevTouchX = 0;
-  prevTouchY = 0;
-  velX = 0;
-  velY = 0;
-  rotation = Math.random() * 30 - 15;
-  currentPaperX = 0;
-  currentPaperY = 0;
-  rotating = false;
-
-  init(paper) {
-    paper.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      if(this.holdingPaper) return;
-      this.holdingPaper = true;
-      
-      paper.style.zIndex = highestZ++;
-      
-      this.touchStartX = e.touches[0].clientX;
-      this.touchStartY = e.touches[0].clientY;
-      this.prevTouchX = this.touchStartX;
-      this.prevTouchY = this.touchStartY;
-    });
-
-    paper.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      if(!this.holdingPaper) return;
-
-      this.touchMoveX = e.touches[0].clientX;
-      this.touchMoveY = e.touches[0].clientY;
-
-      this.velX = this.touchMoveX - this.prevTouchX;
-      this.velY = this.touchMoveY - this.prevTouchY;
-
-      this.currentPaperX += this.velX;
-      this.currentPaperY += this.velY;
-
-      this.prevTouchX = this.touchMoveX;
-      this.prevTouchY = this.touchMoveY;
-
-      paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
-    });
-
-    paper.addEventListener('touchend', (e) => {
-      this.holdingPaper = false;
-      this.rotating = false;
-    });
-  }
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-image: url("https://www.psdgraphics.com/wp-content/uploads/2022/01/white-math-paper-texture.jpg");
+  background-position: center center;
+  font-family: 'Zeyada', cursive;
+  overflow-x: hidden;
 }
 
-const papers = Array.from(document.querySelectorAll('.paper'));
-papers.forEach(paper => {
-  const p = new Paper();
-  p.init(paper);
-});
+/* Container for papers */
+#papers-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* General paper styling */
+.paper {
+  background-image: url("https://i0.wp.com/textures.world/wp-content/uploads/2018/10/2-Millimeter-Paper-Background-copy.jpg?ssl=1");
+  background-size: cover;
+  background-position: center center;
+  padding: 30px 120px;
+  transform: rotateZ(-5deg);
+  box-shadow: 1px 15px 25px 0px rgba(0,0,0,0.5);
+  position: absolute;
+  border-radius: 8px;
+  max-width: 600px;
+  min-width: 250px;
+}
+
+/* Heart paper replaced by cake paper */
+.paper.heart {
+  width: 300px;   /* bigger cake paper */
+  height: 300px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.paper.heart::after {
+  content: "";
+  background-image: url('images/heart.webp'); /* your cake image */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: contain;  /* full image visible */
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+}
+
+/* Image papers */
+.paper.image {
+  padding: 15px;
+}
+
+.paper.image p {
+  font-size: 36px;
+  margin: 5px 0;
+}
+
+/* Images inside papers */
+img {
+  max-height: 400px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 10px 0 0 0;
+  user-select: none;
+  border-radius: 8px;
+}
+
+/* Red paper styling */
+.paper.red {
+  background-color: #ffdddd;
+}
+
+/* Text inside papers */
+p {
+  font-family: 'Zeyada', cursive;
+  font-size: 36px;
+  color: rgb(0,0,100);
+  opacity: 0.85;
+  user-select: none;
+  margin: 5px 0;
+}
+
+/* Smaller text */
+.p1 {
+  font-size: 30px;
+}
+
+.p2 {
+  font-size:34px;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .paper {
+    padding: 15px 25px;
+    max-width: 80%;
+  }
+  .paper.heart {
+    width: 180px;
+    height: 180px;
+  }
+  .paper.image p {
+    font-size: 20px;
+  }
+  p, .p1, .p2 {
+    font-size: 18px;
+  }
+  img {
+    max-height: 150px;
+  }
+}
