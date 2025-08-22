@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Drag Papers ❤️</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Short+Stack&amp;family=Homemade+Apple&amp;display=swap'>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    #countdown {
+      font-family: 'Zeyada', cursive;
+      font-size: 40px;
+      color: rgb(0,0,100);
+      text-align: center;
+      margin-top: 20vh;
+    }
+  </style>
+</head>
+<body>
+  <!-- Countdown before the papers appear -->
+  <p id="countdown"></p>
+
+  <!-- Papers container, hidden by default -->
+  <div id="papers-container" style="display:none; position: relative; width: 100%; height: 100%;">
+    <div class="paper heart"></div>
+
+    <div class="paper image">
+      <p>umm, i was planning ti make sth more good</p>
+      <p>prr ye kuch kaam k chakr me pura nhi hua vo </p>
+      <p>👉👈around 10% hua ,sorry for that 
+      </p>
+      <img src="images/dji.gif" />
+    </div>
+
+    <div class="paper image">
+      <p>Happy Birthday! 🎉 You’re aging like fine code</p>
+      <p>— only getting better with time 😎</p>
+      <img src="images/dfs.gif" />
+    </div>
+
+    <div class="paper image">
+      <p>You’re so amazing,</p>
+      <p>even the cake is jealous 🍰😂</p>
+      <img src="images/8.jpeg" />
+    </div>
+
+    <div class="paper image">
+      <p>Officially nominating you as the</p>
+      <p>CEO of Amazing People 🏆</p>
+      <img src="images/7.jpeg" />
+    </div>
+
+    <div class="paper image">
+      <p>Everyone else is basic,</p>
+      <p>you’re the VIP 🎈</p>
+      <img src="images/6.jpeg" />
+    </div>
+
+    <div class="paper image">
+      <p>Another year older, </p>2
+      <p>but still effortlessly cooler than me 😏</p>
+      <img src="images/5.jpeg" />
+    </div>
+
+    <div class="paper image">
+      <p>hehe</p>
+      <img src="images/3.jpeg" />
+    </div>
+
+    <div class="paper image">
+      <p>Today is just a small reminder</p>
+      <p>of how incredible you are every day ✨</p>
+      <img src="images/1.jpeg" />
+    </div>
+
+    <div class="paper image">
+      <img src="images/2.jpeg" />
+    </div>
+
+    <div class="paper image">
+      <p>How can be</p>
+      <p>someone so cute ❤️</p>
+      <img src="images/4.jpeg" />
+    </div>
+
+    <div class="paper red">
+      <p class="p1">Another year, another reason </p>
+      <p class="p2">to celebrate how awesome you are 🎉 😍</p>
+    </div>
+
+    <div class="paper">
+      <p class="p1">You’re not just incredible today, </p>
+      <p class="p1">but every single day ✨ <span style="color: red !important;">❤️</span></p>
+    </div>
+
+    <div class="paper">
+      <p class="p1">Drag the papers to move!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./script.js"></script>
+  <script src="./mobile.js"></script>
+  <script>
+    // Timer for 23 Aug 2025, 12:00 AM
+    const targetDate = new Date("August 23, 2025 00:00:00").getTime();
+    const container = document.getElementById("papers-container");
+    const countdown = document.getElementById("countdown");
+
+    const timerInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        container.style.display = "block";
+        countdown.style.display = "none";
+        clearInterval(timerInterval);
+
+        // Center all papers initially
+        const papers = Array.from(document.querySelectorAll('.paper'));
+        const rect = container.getBoundingClientRect();
+        papers.forEach(paper => {
+          paper.style.left = (rect.width/2 - paper.offsetWidth/2 + (Math.random()*100-50)) + 'px';
+          paper.style.top = (rect.height/2 - paper.offsetHeight/2 + (Math.random()*100-50)) + 'px';
+        });
+
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000*60*60));
+        const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+        const seconds = Math.floor((distance % (1000*60)) / 1000);
+        countdown.innerText = `Opens in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
